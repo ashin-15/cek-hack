@@ -1,0 +1,21 @@
+# Copy this file to backend/.env and fill in real values before running the server.
+
+# Neon Postgres connection string (Module 1). Get it from your Neon project dashboard.
+DATABASE_URL=postgresql://neondb_owner:npg_BJbdc3uis4ET@ep-patient-moon-b5ogvzis-pooler.c-7.us-east-2.aws.neon.tech/neondb?channel_binding=require&sslmode=require
+
+# LLM provider used for HPO extraction and uniqueness judging (Module 3/6/8).
+LLM_PROVIDER=groq
+GROQ_API_KEY=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
+GROQ_MODEL=openai/gpt-oss-120b
+
+# Only needed if LLM_PROVIDER=gemini or EMBEDDING_PROVIDER=gemini
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-1.5-flash
+
+# Embeddings: "local" runs all-MiniLM-L6-v2 via sentence-transformers (384-dim, no API key needed).
+EMBEDDING_PROVIDER=local
+EMBEDDING_MODEL_NAME=all-MiniLM-L6-v2
+
+DJANGO_SECRET_KEY=iKVIUWTm7wXBYMHidNmszhGTVDkYL4Bw6nRdHva4fpUMVEOpd24H7HCWqpeP7cM19RA
+DJANGO_DEBUG=true
+DJANGO_ALLOWED_HOSTS=*
