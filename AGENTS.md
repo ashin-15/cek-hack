@@ -22,8 +22,9 @@ before planning or making changes so your work stays aligned with the project.
   [A] Kerala demand forecasting, [B] IJST Smart Energy Optimizer, [C] Energies HEMS.
 - `docs/research/README.md` — complete research index. The finalized product,
   architecture, data and demo decisions are in
-  `docs/research/08_finalized_workflow_decisions.md`; file 07 defines scope and
-  novelty; file 01 says what the papers do and do not prove.
+  `docs/research/11_final-workflow-combined.md`, which overrides earlier scope
+  and implementation recommendations. File 07 provides historical scope and
+  novelty context; file 01 says what the papers do and do not prove.
 
 ## Evidence discipline
 

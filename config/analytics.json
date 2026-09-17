@@ -1,0 +1,14 @@
+{
+  "seed": 42,
+  "forecast_meaningful_margin": 0.05,
+  "isolation_contamination": 0.05,
+  "z_threshold": 2.5,
+  "wastage_alert_score": 50,
+  "voltage_min": 216,
+  "voltage_max": 244,
+  "pf_threshold": 0.85,
+  "pf_persistence_intervals": 4,
+  "step_threshold_kw": 0.05,
+  "event_min_intervals": 2,
+  "efficiency_margin": 0.2
+}

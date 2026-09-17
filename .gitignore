@@ -63,3 +63,12 @@ htmlcov/
 # Node (if frontend)
 node_modules/
 .next/
+
+# Reproducible local output
+/data/derived/
+/artifacts/
+*.sqlite3
+*.sqlite3-*
+/frontend/playwright-report/
+/frontend/test-results/
+!.env.example

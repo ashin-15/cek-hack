@@ -1,11 +1,23 @@
+# Dataset roles and storage
+
+Raw CSVs live in `data/raw/` and are immutable inputs. Audit/adapters write to
+`data/derived/`. See `reports/data_audit.md` for hashes, checks and transformations.
+
+- `synthetic_smart_meter_15min.csv`: explicitly synthetic; selected-meter dashboard.
+- `ai_energy_intelligence_dataset.csv`: explicitly synthetic; evaluation and separate safety replay.
+- `Intelligent_abnormal_electricity_usage.csv`: undocumented community provenance; offline daily benchmark only, never a dashboard or merged interval source.
+
+The current scope is [the combined workflow](../docs/research/11_final-workflow-combined.md).
+The schema below documents source columns, not promises of product features or diagnosis.
+
 # Household Energy Intelligence Dataset (`ai_energy_intelligence_dataset.csv`)
 
 ## Overview
 
-- **File**: `data/ai_energy_intelligence_dataset.csv`
+- **File**: `data/raw/ai_energy_intelligence_dataset.csv`
 - **Rows**: 5,760 records (60 days at 15-minute intervals: `2026-03-01 00:00:00` to `2026-04-29 23:45:00`)
 - **Granularity**: 15 minutes (96 intervals per day)
-- **Role in Project**: Benchmark and replay fixture for Tier 1 (MVP: M1–M8) and Tier 2 (A1–A6) system evaluation.
+- **Role in Project**: Appliance/anomaly evaluation and independent labelled safety replay only. Labels never enter a feature matrix. Ageing labels are ignored.
 - **Evidence Tag**: **[X]** synthetic fixture created for testing baseline models, anomaly detection, slab tariff warnings, and electrical safety monitoring under Kerala household conditions.
 
 ## Schema & Field Descriptions

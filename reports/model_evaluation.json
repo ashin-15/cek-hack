@@ -1,0 +1,212 @@
+{
+  "forecast": {
+    "model_name": "random_forest",
+    "version": "forecast-v1-20260917T090808225021Z",
+    "training_timestamp": "2026-09-17T09:08:08.225016+00:00",
+    "feature_schema": [
+      "hour",
+      "day_of_week",
+      "is_weekend",
+      "month",
+      "lag_1h",
+      "lag_2h",
+      "lag_24h",
+      "lag_168h",
+      "rolling_mean_3h",
+      "rolling_mean_24h",
+      "rolling_std_24h",
+      "voltage_mean",
+      "voltage_min",
+      "power_factor_mean",
+      "real_power_max"
+    ],
+    "feature_policy": "Target hour t; all electrical features and rolling history end at t-1. Weekly lag seasonal baseline. Recursive 24h forecast uses only origin history and fixed historical electrical profiles.",
+    "dataset_version": "1ad55014cd693c278a29639c9e33c6aee5d23c83f9781964bc187cf368b620ab",
+    "derived_dataset_version": "e411fac5f07af3cc2e976518256d9d602c43d595ae2ae8c26dc6371ec212dc3e",
+    "configuration": {
+      "seed": 42,
+      "forecast_meaningful_margin": 0.05,
+      "isolation_contamination": 0.05,
+      "z_threshold": 2.5,
+      "wastage_alert_score": 50,
+      "voltage_min": 216,
+      "voltage_max": 244,
+      "pf_threshold": 0.85,
+      "pf_persistence_intervals": 4,
+      "step_threshold_kw": 0.05,
+      "event_min_intervals": 2,
+      "efficiency_margin": 0.2
+    },
+    "split_policy": "SM-KL-001: 7-day warmup, train Aug 8\u201321; held-out Aug 22\u201328. Rolling one-hour-ahead evaluation; winner refit on history for future 24h only. Cutoff 2026-08-22T00:00:00+05:30.",
+    "selection_policy": "Choose simplest candidate within 5% of lowest held-out MAE; fixed before run, no tuning on test. This is a selection holdout, not an independent final generalization test.",
+    "metrics": {
+      "seasonal_naive": {
+        "mae": 0.03205,
+        "rmse": 0.0608,
+        "mape": 14.143,
+        "mape_excluded_zero_targets": 0,
+        "rows": 168
+      },
+      "random_forest": {
+        "mae": 0.0298,
+        "rmse": 0.04684,
+        "mape": 13.177,
+        "mape_excluded_zero_targets": 0,
+        "rows": 168
+      },
+      "xgboost": {
+        "mae": 0.02937,
+        "rmse": 0.04653,
+        "mape": 13.297,
+        "mape_excluded_zero_targets": 0,
+        "rows": 168
+      }
+    },
+    "packages": {
+      "scikit-learn": "1.9.1",
+      "xgboost": "3.4.1",
+      "pandas": "2.3.3",
+      "numpy": "2.3.5"
+    },
+    "forecast_horizon_note": "Reported metrics cover next-hour forecasts only. Recursive next-24h error has not been independently validated."
+  },
+  "anomaly": {
+    "precision": 0.3478,
+    "recall": 0.8,
+    "f1": 0.4848,
+    "support": 20,
+    "rows": 336
+  },
+  "wastage": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "support": 10,
+    "rows": 336
+  },
+  "appliances": [
+    {
+      "class": "Refrigerator compressor",
+      "status": "Held-out interval occupancy; not event identity certainty",
+      "precision": 0.8333,
+      "recall": 0.1562,
+      "f1": 0.2632,
+      "support": 448,
+      "rows": 1344
+    },
+    {
+      "class": "Ceiling fan",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "LED fixture",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "CFL / incandescent",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "Television",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "Washing machine",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "Water heater / geyser",
+      "status": "Held-out interval occupancy; not event identity certainty",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 335,
+      "rows": 1344
+    },
+    {
+      "class": "Split AC",
+      "status": "Held-out interval occupancy; not event identity certainty",
+      "precision": 0.4344,
+      "recall": 0.3158,
+      "f1": 0.3657,
+      "support": 304,
+      "rows": 1344
+    },
+    {
+      "class": "Microwave",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "Kettle",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "Iron",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "Water pump",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "Desktop computer",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "Laptop charger",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    },
+    {
+      "class": "Mixer / grinder",
+      "status": "No separately identified ground truth; not evaluable",
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": null
+    }
+  ]
+}

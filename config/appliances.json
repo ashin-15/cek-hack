@@ -1,0 +1,125 @@
+[
+  {
+    "name": "Refrigerator compressor",
+    "min_w": 100,
+    "max_w": 250,
+    "min_minutes": 15,
+    "max_minutes": 45,
+    "flexible": false,
+    "truth": "gt_fridge_kw"
+  },
+  {
+    "name": "Ceiling fan",
+    "min_w": 50,
+    "max_w": 75,
+    "min_minutes": 60,
+    "max_minutes": 720,
+    "flexible": false
+  },
+  {
+    "name": "LED fixture",
+    "min_w": 7,
+    "max_w": 20,
+    "min_minutes": 30,
+    "max_minutes": 720,
+    "flexible": false
+  },
+  {
+    "name": "CFL / incandescent",
+    "min_w": 40,
+    "max_w": 100,
+    "min_minutes": 30,
+    "max_minutes": 720,
+    "flexible": false
+  },
+  {
+    "name": "Television",
+    "min_w": 60,
+    "max_w": 120,
+    "min_minutes": 60,
+    "max_minutes": 360,
+    "flexible": false
+  },
+  {
+    "name": "Washing machine",
+    "min_w": 300,
+    "max_w": 500,
+    "min_minutes": 30,
+    "max_minutes": 120,
+    "flexible": true
+  },
+  {
+    "name": "Water heater / geyser",
+    "min_w": 1500,
+    "max_w": 2000,
+    "min_minutes": 15,
+    "max_minutes": 60,
+    "flexible": true,
+    "truth": "gt_water_heater_kw"
+  },
+  {
+    "name": "Split AC",
+    "min_w": 1200,
+    "max_w": 1800,
+    "min_minutes": 60,
+    "max_minutes": 720,
+    "flexible": false,
+    "truth": "gt_hvac_kw"
+  },
+  {
+    "name": "Microwave",
+    "min_w": 1000,
+    "max_w": 1500,
+    "min_minutes": 1,
+    "max_minutes": 15,
+    "flexible": false
+  },
+  {
+    "name": "Kettle",
+    "min_w": 1500,
+    "max_w": 2000,
+    "min_minutes": 3,
+    "max_minutes": 5,
+    "flexible": false
+  },
+  {
+    "name": "Iron",
+    "min_w": 1000,
+    "max_w": 1600,
+    "min_minutes": 30,
+    "max_minutes": 90,
+    "flexible": true
+  },
+  {
+    "name": "Water pump",
+    "min_w": 500,
+    "max_w": 1100,
+    "min_minutes": 30,
+    "max_minutes": 60,
+    "flexible": true
+  },
+  {
+    "name": "Desktop computer",
+    "min_w": 150,
+    "max_w": 300,
+    "min_minutes": 60,
+    "max_minutes": 720,
+    "flexible": false
+  },
+  {
+    "name": "Laptop charger",
+    "min_w": 45,
+    "max_w": 90,
+    "min_minutes": 60,
+    "max_minutes": 720,
+    "flexible": false
+  },
+  {
+    "name": "Mixer / grinder",
+    "min_w": 300,
+    "max_w": 750,
+    "min_minutes": 1,
+    "max_minutes": 10,
+    "flexible": false
+  }
+]

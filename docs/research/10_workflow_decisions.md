@@ -1,7 +1,8 @@
 # Decision Record — Finalized MVP Workflow
 
-Status: **accepted product and architecture decisions**, 2026-09-17. This decision record
-overrides earlier recommendations where they differ. Evidence tags remain as
+Status: **superseded** by [the combined workflow](11_final-workflow-combined.md),
+2026-09-17. Retained as historical context only. Its authentication, cloud,
+manual-input, ageing and safety-processing choices are not current scope. Evidence tags remain as
 defined in the research index: **[E]** paper evidence, **[I]** inference, **[X]**
 project extension.
 

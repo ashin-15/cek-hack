@@ -1,0 +1,48 @@
+{
+  "version": "KSERC-427-2023-2025-04",
+  "effective_from": "2025-04-01",
+  "effective_until": "2027-03-31",
+  "verified_on": "2026-09-17",
+  "source": "https://dev.erckerala.org/api/storage/orders/vnp1XnN5z47r0dCh18rj3s2e1q2utii3T8AtwUMm.pdf",
+  "source_sections": "LT-I Domestic page 5; general condition 10 page 4; Annexure E page 40",
+  "telescopic_limit_kwh": 250,
+  "slabs": [
+    { "up_to": 50, "rate": 3.35 },
+    { "up_to": 100, "rate": 4.25 },
+    { "up_to": 150, "rate": 5.35 },
+    { "up_to": 200, "rate": 7.2 },
+    { "up_to": 250, "rate": 8.5 }
+  ],
+  "flat_bands": [
+    { "up_to": 300, "rate": 6.75 },
+    { "up_to": 350, "rate": 7.6 },
+    { "up_to": 400, "rate": 7.95 },
+    { "up_to": 500, "rate": 8.25 },
+    { "up_to": null, "rate": 9.2 }
+  ],
+  "fixed": [
+    { "up_to": 50, "single": 50, "three": 130 },
+    { "up_to": 100, "single": 85, "three": 175 },
+    { "up_to": 150, "single": 105, "three": 205 },
+    { "up_to": 200, "single": 140, "three": 215 },
+    { "up_to": 250, "single": 160, "three": 235 },
+    { "up_to": 300, "single": 220, "three": 240 },
+    { "up_to": 350, "single": 240, "three": 250 },
+    { "up_to": 400, "single": 260, "three": 260 },
+    { "up_to": 500, "single": 285, "three": 285 },
+    { "up_to": null, "single": 310, "three": 310 }
+  ],
+  "tod": {
+    "requires_three_phase": true,
+    "requires_compliant_meter": true,
+    "monthly_threshold_kwh": 250,
+    "periods": [
+      { "start": 0, "end": 6, "multiplier": 1 },
+      { "start": 6, "end": 18, "multiplier": 0.9 },
+      { "start": 18, "end": 22, "multiplier": 1.25 },
+      { "start": 22, "end": 24, "multiplier": 1 }
+    ]
+  },
+  "slab_warning_kwh": 15,
+  "exclusions": "Energy plus fixed charges only. Excludes duty, fuel surcharge, meter rent, taxes, subsidies and special concessions. Monthly equivalent estimate, not an official bill. ToD enrollment cannot be established from these fixtures; disabled for the demo single-phase meter."
+}

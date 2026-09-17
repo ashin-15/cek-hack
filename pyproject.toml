@@ -1,0 +1,11 @@
+[project]
+name = "paranova-energy"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = ["django>=5.2,<5.3", "djangorestframework>=3.16,<3.17", "pandas>=2.2,<3", "numpy>=2,<2.4", "scikit-learn>=1.6,<2", "xgboost>=3,<4", "joblib>=1.4", "httpx>=0.28", "jsonschema>=4.23", "python-dotenv>=1.1"]
+[dependency-groups]
+dev = ["pytest>=8", "pytest-django>=4.10", "ruff>=0.11,<1"]
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "backend.settings"
+pythonpath = ["."]
+testpaths = ["tests"]
