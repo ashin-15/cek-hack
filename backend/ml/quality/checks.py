@@ -43,6 +43,12 @@ def audit_smart_meter_15min(df: pd.DataFrame, source_id: str, sha256: str) -> Au
             count=int(neg_kwh)
         ))
         passed = False
+    else:
+        findings.append(AuditFinding(
+            rule_id="NEGATIVE_KWH",
+            severity="INFO",
+            message=f"No negative {kwh_col} values found"
+        ))
 
     # Check 3: Monotonic cumulative energy per meter
     non_monotonic = 0
@@ -58,6 +64,12 @@ def audit_smart_meter_15min(df: pd.DataFrame, source_id: str, sha256: str) -> Au
             count=non_monotonic
         ))
         passed = False
+    else:
+        findings.append(AuditFinding(
+            rule_id="NON_MONOTONIC_CUMULATIVE",
+            severity="INFO",
+            message=f"All meters exhibit strictly monotonic {cum_col}"
+        ))
 
     # Check 4: Cadence gaps (expecting 15-min deltas)
     gap_count = 0
