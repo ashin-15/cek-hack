@@ -26,11 +26,7 @@ ENV/
 .ipynb_checkpoints/
 
 # Data files
-*.xlsx
-*.xls
-*.parquet
-*.h5
-*.hdf5
+# Keep project datasets under data/ in version control.
 
 # Model artifacts
 *.pkl
