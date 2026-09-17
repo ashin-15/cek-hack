@@ -20,8 +20,10 @@ before planning or making changes so your work stays aligned with the project.
 - `docs/ai_energy_consumption_problem_statement.md` — the hackathon problem statement.
 - `docs/*.md` (paper titles) — the three source research papers, referenced as
   [A] Kerala demand forecasting, [B] IJST Smart Energy Optimizer, [C] Energies HEMS.
-- `docs/research/README.md` — index of scoping research (01–07). File 07 is the
-  current scope decision record; file 01 says what the papers do and do not prove.
+- `docs/research/README.md` — complete research index. The finalized product,
+  architecture, data and demo decisions are in
+  `docs/research/08_finalized_workflow_decisions.md`; file 07 defines scope and
+  novelty; file 01 says what the papers do and do not prove.
 
 ## Evidence discipline
 

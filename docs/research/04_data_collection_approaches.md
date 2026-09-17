@@ -66,9 +66,11 @@ Data tiers D0–D4 are defined in file 03.
 - Privacy: 1 Hz whole-house data reveals occupancy. Store raw D2 locally or
   aggregate to 1-min before cloud upload; publish only derived features.
 
-## Recommended hackathon data plan
+## Finalized hackathon data plan (see file 08)
 
-1. **Primary:** iAWE + UCI household datasets, re-timestamped and tariff-mapped to KSEB, driving all ML.
-2. **Secondary:** one ESP32 + PZEM-004T whole-house node on a team member's home (or a lab bench with a kettle/fan/heater) for a live-data demo; 2–3 Tuya plugs for per-appliance view (mirrors [C]).
-3. **Tertiary:** bill upload/photo path to show inclusive onboarding.
-4. **Simulator** for anomalies, ageing, and voltage/outage events.
+1. **Primary:** audit and replay the three synthetic datasets already under `data/`; all UI and metric outputs label them as simulated Kerala household data.
+2. **Provisional roles pending audit:** `synthetic_smart_meter_15min.csv` (12 meters) for forecasting and patterns; `Intelligent_abnormal_electricity_usage.csv` (360 households) for population-level daily anomaly modelling; `ai_energy_intelligence_dataset.csv` (one richly labelled household) for appliance, wastage, ageing and safety demonstrations.
+3. **No live hardware is required for the MVP.** IoT nodes and plugs remain medium-term integrations.
+4. **Manual input:** units and relevant household values support billing and what-if analysis; they do not create interval-history features.
+5. **KSEB adapter:** display as “coming soon”; replay implements its future internal provider contract, but the MVP must not imply a real KSEB API connection.
+6. External public datasets such as iAWE/UCI may be used later for robustness testing, but they are not the authoritative demo fixtures.

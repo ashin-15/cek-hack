@@ -98,7 +98,7 @@ canonical frame  →  features/  →  models/
 **Canonical labelled-record schema** (what the adapter must emit, whatever the raw columns are):
 
 ```python
-# src/adapters/intelligent_abnormal.py
+# backend/ml/adapters/intelligent_abnormal.py
 CANONICAL = {
     "household_id": "str",     # direct mapping from Meter_Id
     "ts":           "datetime64[ns]",  # Date, parsed day-first
@@ -189,7 +189,7 @@ Two feature families; which ones exist depends on the audit.
 ### 4.1 Daily features available in this dataset (D1)
 
 This dataset can share only a **daily** feature-builder subset with M2
-(`src/features/daily.py`), not `features/interval.py`:
+(`backend/ml/features/daily.py`), not `features/interval.py`:
 
 | Group | Allowed features |
 |-------|------------------|
@@ -219,13 +219,13 @@ features can honestly be derived.
 
 ## 5. Model specification
 
-### 5.1 Model ladder — always report all three
+### 5.1 Model ladder — always report all four
 
 | Tier | Model | Purpose |
 |------|-------|---------|
 | **B0** | Majority class + a single-threshold rule on total kWh | Floor. If the real model doesn't clear this by a wide margin on PR-AUC, there is no story. |
 | **B1** | Logistic regression on the standardised feature set | Linear reference, gives signed coefficients for the write-up |
-| **M** | **LightGBM binary classifier** (`objective=binary`, `is_unbalance=True` or `scale_pos_weight`), native categorical features | Primary. Tree ensembles are the paper-supported default for electricity data — [A Table VIII] RF/XGBoost best **[E]**, [B Table 2] RF best at 12 ms inference **[E]** |
+| **M** | **XGBoost binary classifier** (`objective=binary:logistic`, training-fold `scale_pos_weight`), with categorical fields one-hot encoded in the fitted preprocessing pipeline | Primary. Tree ensembles are the paper-supported default for electricity data — [A Table VIII] RF/XGBoost best **[E]**, [B Table 2] RF best at 12 ms inference **[E]** |
 | **M-alt** | Isolation Forest / One-Class SVM trained on normals only, scored on the test set | Shows how much the labels are actually worth vs. a purely unsupervised detector. This comparison is the honest core of the evaluation. |
 
 **On the dataset's `tensorflow` tag:** ignore it as a modelling instruction. A neural net
@@ -237,16 +237,15 @@ that it did not beat the GBM, rather than as the headline model.
 ### 5.2 Hyper-parameters (starting grid)
 
 ```yaml
-# configs/model_abnormal_lgbm.yaml
-objective: binary
-metric: [average_precision, auc]
-learning_rate: 0.05
-num_leaves: [15, 31, 63]
-min_data_in_leaf: [20, 50, 100]
-feature_fraction: [0.7, 0.9, 1.0]
-bagging_fraction: 0.8
-bagging_freq: 1
-lambda_l2: [0.0, 1.0, 5.0]
+# configs/model_abnormal_xgb.yaml
+objective: binary:logistic
+eval_metric: [aucpr, auc]
+learning_rate: [0.03, 0.05, 0.1]
+max_depth: [3, 5, 7]
+min_child_weight: [1, 5, 10]
+colsample_bytree: [0.7, 0.9, 1.0]
+subsample: [0.7, 0.9, 1.0]
+reg_lambda: [0.0, 1.0, 5.0]
 n_estimators: 2000
 early_stopping_rounds: 100
 scale_pos_weight: auto        # = n_neg / n_pos from the training fold only
@@ -279,7 +278,7 @@ payload), not a raw score.
 | **Never** | A plain random row split. It would put adjacent daily records from the same meter into train and test and inflate metrics. |
 | **Imbalance** | Class weights first. SMOTE only as an ablation, applied **inside** the CV fold, never before splitting. |
 | **Residual feature leakage** | The expected-daily-kWh model is fitted per fold on that fold's training window only, with a walk-forward scheme. Never substitute the CSV's raw `Expected_Energy(kwh)` or `Usage_Deviation(%)` for it. |
-| **Scaling** | Not needed for LightGBM; fit the scaler inside the pipeline for B1. |
+| **Scaling** | Not needed for XGBoost; fit the scaler inside the pipeline for B1. |
 | **Seeds** | 5 seeds, report mean ± std. A single run is not a result. |
 | **Tracking** | MLflow (or a plain `runs/<timestamp>/metrics.json` if time-poor); log dataset fingerprint, config, git SHA, metrics, feature importances. |
 | **Data-quality exclusion** | Exclude the 900 rows with missing `Actual_Energy(kwh)` from model metrics. Report their count and label concentration separately; do not silently impute them. |
@@ -325,7 +324,7 @@ payload), not a raw score.
 ### 7.4 Explainability (non-optional — the product promises it)
 
 Every alert must render as *expected / observed / why*. Implement with SHAP
-(`TreeExplainer`, cheap on LightGBM): top-3 contributing features per flagged day,
+(`TreeExplainer`, cheap on XGBoost): top-3 contributing features per flagged day,
 translated into a sentence template. These templates, plus the deterministic numbers,
 are what goes into the LLM facts payload — the LLM phrases, never computes
 ([B Discussion B] limitation 4 **[E]**, file 05 §7).
@@ -401,35 +400,37 @@ POST /api/v1/anomaly/daily-score
     {"feature": "temperature_c", "value": 29.5, "direction": "+"},
     {"feature": "connected_load_kw", "value": 3.0, "direction": "+"}
   ],
-  "model": {"name": "abnormal_lgbm", "version": "1.0.0",
+  "model": {"name": "abnormal_xgb", "version": "1.0.0",
             "dataset_fingerprint": "sha256:…", "trained_at": "2026-09-18T11:04:00Z"},
   "advice_eligible": true
 }
 ```
 
 Latency target: p95 < 50 ms per daily record on CPU, batch-scored for replay.
-Artefacts: `models/abnormal_lgbm/1.0.0/{model.txt,calibrator.pkl,features.json,model_card.md}`.
+Artefacts: `models/abnormal_xgb/1.0.0/{model.json,preprocessor.joblib,calibrator.joblib,features.json,model_card.md}`.
 
 ---
 
 ## 9. Repository plan
 
 ```
-src/
+backend/ml/
   adapters/intelligent_abnormal.py # local CSV → canonical daily parquet (+ fingerprint)
   features/daily.py                # dataset-specific daily replay features
-  features/interval.py             # separate live D1/D2 interval path
+  features/interval.py             # separate replay/future-live interval path
   models/abnormal/train.py         # ladder B0/B1/M/M-alt, CV, Optuna, MLflow
   models/abnormal/calibrate.py
-  models/abnormal/predict.py       # loaded by the FastAPI service
+  models/abnormal/predict.py       # loaded by the Django inference service
   eval/benchmark.py                # 3 surfaces + ablations → report.md
   eval/inject.py                   # synthetic event injection (M8)
-  serving/api.py
+backend/apps/analytics/
+  serializers.py                   # DRF input/output contracts
+  views.py                         # score/replay endpoints
 scripts/
   audit_dataset.py
   label_integrity.py
 configs/
-  model_abnormal_lgbm.yaml
+  model_abnormal_xgb.yaml
   fusion.yaml
 docs/research/
   08_abnormal_usage_model_spec.md  # this file
@@ -451,7 +452,7 @@ community dataset; not validated on live KSEB household data."*
 | **P0** (complete) | Audit supplied CSV and record schema/fingerprint | 10,800-row daily D1 panel; class balance; missingness | §0 completed; provenance/licence still open |
 | **P1** (1 h) | Run `label_integrity.py` after excluding missing-actual rows and suspected leakage fields | Branch verdict in `08a` | **Hard gate** — do not train before this |
 | **P2** (2–3 h) | Adapter → canonical parquet; feature builder; B0/B1 baselines | Baseline PR-AUC | B0 number recorded |
-| **P3** (3–4 h) | LightGBM + Optuna + grouped/temporal CV; calibration | Model artefact + metrics | Beats B0 on PR-AUC by a margin > seed std |
+| **P3** (3–4 h) | XGBoost + Optuna + grouped/temporal CV; calibration | Model artefact + metrics | Beats B0 on PR-AUC by a margin > seed std |
 | **P4** (2 h) | SHAP explanations, threshold by alert budget, model card | `08b_model_card.md` | Every alert renders expected/observed/why |
 | **P5** (3 h) | Synthetic-injection benchmark + cross-dataset transfer + ablations | `eval/report.md` | All three surfaces reported, including bad numbers |
 | **P6** (2 h) | Daily replay endpoint, fusion with daily residual + IForest, hysteresis | `/anomaly/daily-score` | p95 < 50 ms; replay demo runs end to end |

@@ -13,7 +13,9 @@ question and builds on the previous ones. Read them in order.
 | 05 | [05_ai_ml_model_mapping.md](05_ai_ml_model_mapping.md) | Where AI/ML belongs; model classes per capability; paper-supported vs. proposed |
 | 06 | [06_feasibility_assessment.md](06_feasibility_assessment.md) | MVP vs medium-term vs research-level; hardware, datasets, infra, ML complexity, limitations |
 | 07 | [07_proposed_scope_and_novelty.md](07_proposed_scope_and_novelty.md) | Defensible project scope, differentiating/novel features, risks |
+| **Decision** | [08_finalized_workflow_decisions.md](08_finalized_workflow_decisions.md) | Accepted MVP product, data, safety, AI, stack and demo-workflow decisions; overrides earlier recommendations where different |
 | 08 | [08_abnormal_usage_model_spec.md](08_abnormal_usage_model_spec.md) | Dataset-grounded daily abnormal-usage model specification and leakage controls |
+| 09 | [09_model_implementation_plan.md](09_model_implementation_plan.md) | Verified-dataset implementation plan for the interval anomaly model and daily benchmark |
 
 ## Source papers (in `../`)
 

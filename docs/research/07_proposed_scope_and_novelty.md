@@ -21,8 +21,8 @@ problem statement calls the core objective.
 
 | # | Feature | Novelty vs papers | Evidence basis |
 |---|---------|-------------------|----------------|
-| M1 | **Multi-source ingestion** (bill/CSV, meter-photo OCR, public-dataset replay, MQTT node, smart-plug cloud, simulator) into one canonical series | New: inclusive onboarding for non-smart-meter homes (most of Kerala) | [C §2] plug→cloud path [E]; rest [I]/[X] |
-| M2 | **Context-conditional baseline & anomaly engine**: LightGBM expected-load model (hour, daytype, weather, lags) → residual scoring + Isolation Forest + anomaly-type tags; every alert states *expected / observed / why* | New: none of the papers do anomaly detection | model family [E] via [A],[B]; method [I] |
+| M1 | **Replay/manual ingestion** (audited project CSVs plus manual units/household values) behind a provider contract that can later support an authorized KSEB adapter | New: progressive path from manual values to future smart-meter data | adapter architecture [I]/[X] |
+| M2 | **Context-conditional baseline & anomaly engine**: compare seasonal baseline, Random Forest and XGBoost for expected load → residual scoring + Isolation Forest/rules + anomaly-type facts; every alert states *expected / observed / why* | New: none of the papers do anomaly detection | model family [E] via [A],[B]; method [I] |
 | M3 | **Wastage detectors**: phantom-load trend, left-on plateau, inactive-window usage | New | [I] |
 | M4 | **Forecast + slab-cliff early warning**: quantile end-of-cycle forecast → P(crossing 250-unit KSEB telescopic→non-telescopic boundary) → daily kWh budget "gauge" | New: [B] has a static slab calculator; we make it probabilistic and forward-looking | [B B.iv] engine [E]; forecast [X] |
 | M5 | **KSEB-accurate billing engine** (telescopic/non-telescopic, fixed charge, duty, fuel surcharge; JSON tariff, dated) | Reproduces [B] for Kerala | [B] [E] |
@@ -82,17 +82,17 @@ utility smart-meter API (no public API), remaining-useful-life prediction.
 
 | Purpose | Source | Tier |
 |---------|--------|------|
-| Model training / demo replay | iAWE (Indian), UCI household, UK-DALE/REFIT signatures | D1/D2 |
-| Weather features & forecasts | Open-Meteo (or similar) for Kerala locations | — |
-| Tariff | Latest KSERC domestic schedule as JSON | — |
+| Forecast/pattern replay | `data/synthetic_smart_meter_15min.csv` (12 simulated meters; audit in file 09) | D1 + interval V/I/PF |
+| Daily anomaly benchmark | `data/Intelligent_abnormal_electricity_usage.csv` (community fixture with unresolved provenance and suspected leakage; audit in file 08) | Daily D1 |
+| Rich appliance/waste/health/safety demo | `data/ai_energy_intelligence_dataset.csv` (one simulated household) | D1 + simulated add-on channels |
+| Tariff | Latest verified KSERC domestic schedule as dated JSON | — |
 | Appliance benchmarks | Curated BEE star-label subset (AC, fridge, fan, geyser) | — |
-| Grid context | Grid-India / POSOCO daily Kerala demand | — |
-| Live demo | 1 node (whole-house or bench), 2–3 plugs | D2 |
-| Onboarding demo | Sample KSEB bill PDF, meter photo | D0 |
+| Manual input | Units and household values for bill/what-if analysis | D0 |
+| External robustness (post-MVP) | iAWE, UCI, UK-DALE/REFIT | D1/D2 |
 
 ## AI/ML components (from file 05)
 
-- LightGBM/XGBoost interval forecaster with quantile heads (paper-supported family).
+- Seasonal-naive baseline vs Random Forest vs XGBoost interval forecaster; select by leakage-safe held-out evaluation, then add quantile/conformal bounds (paper-supported tree families).
 - Residual + Isolation Forest anomaly scorer; small tree for anomaly-type tags.
 - RF inventory→kWh model ([B] replica).
 - k-means day-type clustering; change-point (ruptures/CUSUM) for regime and drift.
@@ -102,22 +102,22 @@ utility smart-meter API (no public API), remaining-useful-life prediction.
 
 ## Hardware requirements
 
-- **Minimum:** none (public data + simulator + bill upload).
-- **Recommended demo:** ESP32 + PZEM-004T v3 (or Shelly EM) on the mains or a bench strip; 2–3 Tuya/Tasmota 16 A plugs; Mosquitto broker on the backend host.
-- **Safety add-on:** second CT wired around L+N for residual current; optional ZMPT101B for N–E voltage. Electrician for any live-wire work.
+- **Finalized MVP:** none; replay the audited synthetic project datasets.
+- **Tier 2 option:** ESP32 + PZEM-004T v3 (or Shelly EM) and 2–3 Tuya/Tasmota 16 A plugs.
+- **Safety add-on:** second CT wired around L+N for residual current; optional N–E voltage sensing. Electrician required for live-wire work.
 
 ## Main technical risks & mitigations
 
 | Risk | Impact | Mitigation |
 |------|--------|------------|
-| Insufficient real household history for learned baselines | Anomaly/forecast demos look fake | Use iAWE/UCI replay + simulator; show live node for monitoring/V/I only; be transparent |
-| No labelled anomalies/ageing | Cannot report real accuracy | Synthetic-event benchmark with stated caveat |
+| No live/field-validated KSEB household history | Results could be mistaken for production evidence | Badge synthetic/community data in the UI; show model versions and audit facts; never claim field validation |
+| Labels are synthetic, incomplete, or suspected of leakage | Misleadingly high anomaly/fault accuracy | Apply files 08–09 leakage gates; separate injected-event metrics; preserve immutable raw files |
 | Tariff mismatch with current KSERC order | Wrong ₹ figures on stage | Dated tariff JSON, one-time verification, show tariff version in UI |
 | Over-claiming fault detection | Credibility/safety liability | File 03 language; "indicator, consult electrician"; descope arc/earthing |
 | LLM hallucinating numbers | Trust | Facts-only guardrail + templated fallback ([B] limitation) |
 | Weather API / LLM API outage during demo | Demo failure | Cache weather; offline templated recommendations |
-| Sensor node reliability (Wi-Fi, calibration) | Live view flaky | Pre-record a fallback stream; calibrate PZEM against a known load |
-| Privacy of 1 Hz data | Ethical/regulatory | Aggregate to 1-min before upload; local-first option |
+| Replay/backend or Groq failure | Main demo breaks | Seed/precompute the main dashboard; deterministic advisory fallback; live API proof is secondary |
+| Future interval smart-meter data reveals occupancy | Ethical/regulatory | Minimise retention and aggregate before cloud upload |
 | Scope creep into Tier 2/3 | Nothing finished | Freeze M1–M8 first; A1–A3 only after MVP is demoable |
 
 ## Decision log

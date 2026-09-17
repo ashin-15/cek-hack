@@ -4,33 +4,33 @@ Answers: *what is hackathon-feasible, what needs IoT hardware / more data, what 
 research-level; required hardware, datasets, infrastructure, ML complexity,
 deployment, limitations.* Tags per README.
 
-## Tier 1 — MVP / hackathon-feasible (software + public data, optional 1 sensor node)
+## Tier 1 — MVP / hackathon-feasible (software + project dataset replay)
 
 | Feature | Data | ML complexity | Depends on |
 |---------|------|---------------|-----------|
-| Ingestion adapters: CSV/bill upload, public-dataset replay, simulator, MQTT (mock or 1 real node) | D0–D2 | none | — |
-| Consumption dashboard (daily/hourly/1-min) | D1 | none | ingestion |
+| Ingestion adapters: project CSV replay and manual bill/unit input | D0–D1 | none | — |
+| Consumption dashboard (daily/15-minute) | D1 | none | ingestion |
 | Usage-pattern analysis: load shape by hour×daytype, baseload, peak windows, day clustering | D1 | low (k-means, percentiles) | ≥2 weeks data |
-| Household interval forecast (24 h / 7 d) with LightGBM + calendar + weather | D1 | low–medium | ≥4 weeks; weather API |
+| Household interval forecast (24 h / 7 d): seasonal baseline vs Random Forest vs XGBoost | D1 | low–medium | audited 15-minute dataset |
 | End-of-cycle kWh forecast with quantiles → **slab-crossing probability** | D1 | medium | forecast |
 | KSEB slab billing engine (telescopic ≤250 units bi-monthly, non-telescopic above, fixed charge, duty, fuel surcharge) with configurable tariff JSON | D0 | none | current tariff order |
 | Forecast-residual anomaly detection + Isolation Forest + anomaly-type tagging | D1 | medium | forecast |
 | Wastage: phantom-load trend, left-on plateau, inactive-period usage | D1 | low | pattern module |
 | Declared-inventory appliance split (RF as in [B]) + inefficient-appliance ranking vs BEE ratings + replacement payback | D0 + inventory | low | inventory UI |
-| Voltage/over-current abnormality log (if the node reports V/I) | D2 | none | sensor node |
-| LLM recommendation layer with guardrails | derived facts | integration | Groq/OpenAI-compatible API or local small model |
+| Interval-level voltage/over-current abnormality log from replayed V/I fields (not transient fault detection) | D1 telemetry | none | synthetic smart-meter replay |
+| LLM recommendation layer with guardrails | derived facts | integration | Groq-hosted Llama + deterministic fallback |
 | Simulator with injectable events (spike, phantom load, ageing drift, sag, outage) | — | low | — |
 
-**Hardware (optional, ~₹2–4k):** 1× ESP32 + PZEM-004T v3 (100 A CT version) + 5 V supply, or a Shelly EM; 2–3 Tuya 16 A smart plugs. Bench alternative: kettle + fan + bulb on a power strip through the node.
+**Hardware:** none for the finalized replay-only MVP. ESP32/PZEM and smart plugs remain Tier 2 options, not dependencies.
 
-**Datasets:** iAWE (Indian), UCI Individual Household Electric Power Consumption, UK-DALE or REFIT (per-appliance signatures), Grid-India daily Kerala demand (for [A]-style context), Open-Meteo or similar for weather history/forecast, BEE star-label tables (manually curated subset), latest KSERC domestic tariff schedule.
+**Datasets:** the three project fixtures under `data/` are authoritative for the MVP. `synthetic_smart_meter_15min.csv` and `ai_energy_intelligence_dataset.csv` are synthetic; the provenance of `Intelligent_abnormal_electricity_usage.csv` is undocumented and it must be described as a community prototype fixture, not real KSEB data. All require reproducible validation/adapters before training. iAWE, UCI, UK-DALE or REFIT may later test external robustness; they are not the main demo source. Supporting sources remain weather history/forecast, BEE star-label tables (curated subset), and the latest verified KSERC domestic tariff schedule.
 
-**Infrastructure:** Python (pandas, scikit-learn, LightGBM, ruptures), FastAPI or Flask ([B] used Flask [E]), PostgreSQL + TimescaleDB or plain Postgres/SQLite, MQTT broker (Mosquitto) for the node, React/Next or plain JS frontend, hosted on a free tier (Render as in [B] [E], or Fly/Railway). LLM via Groq API ([B] [E]).
+**Infrastructure:** React + Vite, Recharts, Axios and React Router on Vercel; Django + Django REST Framework with pandas, NumPy, scikit-learn and XGBoost on Render or Railway; Neon PostgreSQL; Groq-hosted Llama for fact-grounded explanations. Training is an offline reproducible pipeline; Django loads versioned artifacts for inference.
 
-**Deployment requirement:** single container + DB; cold start acceptable [B Testing A.v] [E].
+**Deployment requirement:** separate frontend and backend deployments plus Neon. A seeded dashboard and deterministic recommendation fallback protect the main demo from backend cold starts or Groq failure.
 
 **Limitations (be explicit in demo):**
-- Anomaly/forecast quality shown on public or simulated data; the live node has hours, not weeks, of history → live view shows monitoring + voltage/current only, models run on replayed data.
+- Model quality is evaluated on project fixtures; this is not field validation on live KSEB households.
 - Tariff engine correct only for the configured DISCOM/year.
 - Recommendations quality unvalidated (no user study) — same as [B].
 
