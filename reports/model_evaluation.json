@@ -1,8 +1,8 @@
 {
   "forecast": {
     "model_name": "random_forest",
-    "version": "forecast-v1-20260917T090808225021Z",
-    "training_timestamp": "2026-09-17T09:08:08.225016+00:00",
+    "version": "forecast-v1-20260917T093606728666Z",
+    "training_timestamp": "2026-09-17T09:36:06.728652+00:00",
     "feature_schema": [
       "hour",
       "day_of_week",

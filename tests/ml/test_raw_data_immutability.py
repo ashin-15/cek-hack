@@ -12,6 +12,8 @@ EXPECTED_HASHES = {
 def test_raw_csv_hashes_unchanged():
     for rel_path, expected_hash in EXPECTED_HASHES.items():
         p = Path(rel_path)
+        if not p.exists():
+            p = Path("data/raw") / p.name
         assert p.exists()
         current_hash, _, _, _ = compute_file_hash_and_rows(p)
         assert current_hash == expected_hash, f"Raw data modified for {rel_path}! Expected {expected_hash}, got {current_hash}"

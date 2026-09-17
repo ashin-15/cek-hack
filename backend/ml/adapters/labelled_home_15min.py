@@ -8,7 +8,11 @@ def load_labelled_home_15min(csv_path: str) -> Tuple[pd.DataFrame, pd.DataFrame]
     """Load ai_energy_intelligence_dataset.csv, emitting canonical telemetry and isolated evaluation truth."""
     path = Path(csv_path)
     if not path.exists():
-        raise FileNotFoundError(f"File not found: {csv_path}")
+        alt_path = path.parent / "raw" / path.name
+        if alt_path.exists():
+            path = alt_path
+        else:
+            raise FileNotFoundError(f"File not found: {csv_path}")
 
     df = pd.read_csv(path)
 

@@ -8,7 +8,11 @@ def load_smart_meter_15min(csv_path: str) -> pd.DataFrame:
     """Load and transform synthetic_smart_meter_15min.csv into canonical schema."""
     path = Path(csv_path)
     if not path.exists():
-        raise FileNotFoundError(f"File not found: {csv_path}")
+        alt_path = path.parent / "raw" / path.name
+        if alt_path.exists():
+            path = alt_path
+        else:
+            raise FileNotFoundError(f"File not found: {csv_path}")
 
     df = pd.read_csv(path)
 

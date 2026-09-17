@@ -1,4 +1,5 @@
 """Tests for AC-004 and AC-005: Canonical adapters and data quality checks."""
+from pathlib import Path
 import pytest
 import pandas as pd
 from backend.ml.adapters import load_smart_meter_15min, load_daily_abnormal, load_labelled_home_15min
@@ -29,7 +30,10 @@ def test_daily_abnormal_adapter_and_audit():
     # The 900 quarantined rows must all have abnormal_usage == 1
     assert (quarantine_df["abnormal_usage"] == 1).all()
 
-    raw_df = pd.read_csv("data/Intelligent_abnormal_electricity_usage.csv")
+    csv_path = Path("data/Intelligent_abnormal_electricity_usage.csv")
+    if not csv_path.exists():
+        csv_path = Path("data/raw/Intelligent_abnormal_electricity_usage.csv")
+    raw_df = pd.read_csv(csv_path)
     audit = audit_daily_abnormal(raw_df, "daily_abnormal_v1", "test_hash")
     assert audit.passed_gates is True
     rule_ids = [f.rule_id for f in audit.findings]

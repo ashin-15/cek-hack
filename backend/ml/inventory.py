@@ -66,7 +66,16 @@ def inventory_datasets(
         contracts_cfg = yaml.safe_load(f)
 
     descriptors: Dict[str, SourceDescriptor] = {}
-    csv_files = sorted(list(p_data.glob("*.csv")))
+    csv_candidates = list(p_data.glob("*.csv")) + list(p_data.glob("raw/*.csv"))
+    if not csv_candidates:
+        csv_candidates = [p for p in p_data.rglob("*.csv") if "derived" not in p.parts]
+    seen_paths = set()
+    csv_files = []
+    for c in sorted(csv_candidates):
+        resolved = c.resolve()
+        if resolved not in seen_paths:
+            seen_paths.add(resolved)
+            csv_files.append(c)
 
     for csv_file in csv_files:
         sha256, size_bytes, row_count, columns = compute_file_hash_and_rows(csv_file)

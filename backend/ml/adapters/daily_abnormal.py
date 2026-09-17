@@ -9,7 +9,11 @@ def load_daily_abnormal(csv_path: str) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """Load daily abnormal usage dataset, cleaning strings and quarantining missing-actual rows."""
     path = Path(csv_path)
     if not path.exists():
-        raise FileNotFoundError(f"File not found: {csv_path}")
+        alt_path = path.parent / "raw" / path.name
+        if alt_path.exists():
+            path = alt_path
+        else:
+            raise FileNotFoundError(f"File not found: {csv_path}")
 
     df = pd.read_csv(path)
 

@@ -34,6 +34,8 @@ def test_inventory_nonexistent_directory():
 
 def test_deterministic_hash():
     p = Path("data/synthetic_smart_meter_15min.csv")
+    if not p.exists():
+        p = Path("data/raw/synthetic_smart_meter_15min.csv")
     h1, sz1, r1, _ = compute_file_hash_and_rows(p)
     h2, sz2, r2, _ = compute_file_hash_and_rows(p)
     assert h1 == h2

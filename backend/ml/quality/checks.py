@@ -1,5 +1,4 @@
-"""Data quality and structural integrity checks for canonical inputs."""
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Any, Tuple
 import pandas as pd
 import numpy as np
@@ -122,7 +121,7 @@ def audit_smart_meter_15min(df: pd.DataFrame, source_id: str, sha256: str) -> Au
 
     return AuditReport(
         source_id=source_id,
-        timestamp=datetime.utcnow().isoformat(),
+        timestamp=datetime.now(timezone.utc).isoformat(),
         sha256=sha256,
         row_count=len(df),
         findings=findings,
@@ -165,7 +164,7 @@ def audit_daily_abnormal(df: pd.DataFrame, source_id: str, sha256: str) -> Audit
 
     return AuditReport(
         source_id=source_id,
-        timestamp=datetime.utcnow().isoformat(),
+        timestamp=datetime.now(timezone.utc).isoformat(),
         sha256=sha256,
         row_count=len(df),
         findings=findings,
