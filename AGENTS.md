@@ -14,3 +14,19 @@ before planning or making changes so your work stays aligned with the project.
    same change.
 3. Keep documentation accurate and current. Treat undocumented, transient chat
    context as non-authoritative until it has been recorded in `docs/`.
+
+## Where things live
+
+- `docs/ai_energy_consumption_problem_statement.md` — the hackathon problem statement.
+- `docs/*.md` (paper titles) — the three source research papers, referenced as
+  [A] Kerala demand forecasting, [B] IJST Smart Energy Optimizer, [C] Energies HEMS.
+- `docs/research/README.md` — index of scoping research (01–07). File 07 is the
+  current scope decision record; file 01 says what the papers do and do not prove.
+
+## Evidence discipline
+
+Tag claims in docs as **[E]** (demonstrated in a paper, cite section), **[I]**
+(engineering inference), or **[X]** (our proposed, unproven extension). Never
+present [I]/[X] items as established. In particular: standard smart-meter kWh data
+cannot diagnose loose connections, earthing or leakage faults (see
+`docs/research/03_electrical_fault_detectability.md`).
