@@ -1,6 +1,6 @@
 # cek-hack
 
-A project built during a hackathon.
+A project built during hackathon.
 
 ## Getting Started
 
