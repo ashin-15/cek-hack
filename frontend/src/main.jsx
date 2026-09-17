@@ -1150,26 +1150,58 @@ function Cost({ data }) {
   );
 }
 function Ask({ data }) {
-  const [answer, setAnswer] = useState(data.chat),
-    [question, setQuestion] = useState(""),
-    [busy, setBusy] = useState(false),
-    [error, setError] = useState(""),
-    [live, setLive] = useState(false);
+  const [answer, setAnswer] = useState(data.chat);
+  const [messages, setMessages] = useState([
+    {
+      id: "init",
+      role: "assistant",
+      answer: data.chat,
+    },
+  ]);
+  const [question, setQuestion] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [live, setLive] = useState(true);
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, busy]);
+
   async function ask(q) {
-    if (!q.trim()) return;
+    const trimmed = q.trim();
+    if (!trimmed || busy) return;
     setBusy(true);
     setError("");
+    setQuestion("");
+    const userMsg = { id: `u_${Date.now()}`, role: "user", text: trimmed };
+    setMessages((prev) => [...prev, userMsg]);
+
     try {
-      setAnswer((await api.post("/chat", { question: q, live })).data);
-      setQuestion("");
+      const res = (await api.post("/chat", { question: trimmed, live })).data;
+      setAnswer(res);
+      setMessages((prev) => [
+        ...prev,
+        { id: `a_${Date.now()}`, role: "assistant", answer: res },
+      ]);
     } catch (e) {
-      setError(
-        e.response?.data?.detail || "Unable to reach the local advisor.",
-      );
+      const msg = e.response?.data?.detail || "Unable to reach the local advisor.";
+      setError(msg);
+      setMessages((prev) => [
+        ...prev,
+        { id: `err_${Date.now()}`, role: "assistant", error: msg },
+      ]);
     } finally {
       setBusy(false);
     }
   }
+
+  function resetChat() {
+    setMessages([{ id: `init_${Date.now()}`, role: "assistant", answer: data.chat }]);
+    setAnswer(data.chat);
+    setError("");
+  }
+
   return (
     <>
       <PageHeading
@@ -1187,33 +1219,77 @@ function Ask({ data }) {
               <strong>Advisor</strong>
               <span>Your household energy companion</span>
             </div>
+            <div className="advisor-status-badge">
+              <span className={`status-pulse ${live ? "active" : ""}`} />
+              {live ? "Live Groq AI" : "Template Mode"}
+            </div>
           </div>
-          <div className="answer" aria-live="polite">
-            <p>{answer.explanation}</p>
-            <h3>What you can consider</h3>
-            {answer.recommendations.map((r, i) => (
-              <div className="answer-action" key={i}>
-                <Check size={17} />
-                <p>{r}</p>
+
+          <div className="chat-thread" role="log" aria-live="polite">
+            {messages.map((m) =>
+              m.role === "user" ? (
+                <div key={m.id} className="chat-bubble-user">
+                  <div className="chat-user-label">You</div>
+                  <p>{m.text}</p>
+                </div>
+              ) : m.error ? (
+                <div key={m.id} className="chat-bubble-error" role="alert">
+                  <p>{m.error}</p>
+                </div>
+              ) : (
+                <div key={m.id} className="chat-bubble-assistant">
+                  <div className="answer">
+                    <p>{m.answer.explanation}</p>
+                    {m.answer.recommendations && m.answer.recommendations.length > 0 && (
+                      <>
+                        <h3>What you can consider</h3>
+                        {m.answer.recommendations.map((r, i) => (
+                          <div className="answer-action" key={i}>
+                            <Check size={17} />
+                            <p>{r}</p>
+                          </div>
+                        ))}
+                      </>
+                    )}
+                    <Footnote>
+                      <span className="source-tag">
+                        {m.answer.source === "Groq facts narration" ? "⚡ " : "📋 "}
+                        {m.answer.source}
+                        {m.answer.model ? ` · ${m.answer.model}` : ""}
+                      </span>
+                      {m.answer.fallback_reason ? ` · ${m.answer.fallback_reason}` : ""}
+                    </Footnote>
+                  </div>
+                </div>
+              )
+            )}
+
+            {busy && (
+              <div className="chat-typing">
+                <span className="dot" />
+                <span className="dot" />
+                <span className="dot" />
+                <span className="typing-text">
+                  {live ? "Consulting Groq facts narration…" : "Reading fact sheet…"}
+                </span>
               </div>
-            ))}
-            <Footnote>
-              {answer.source}
-              {answer.fallback_reason ? ` · ${answer.fallback_reason}` : ""}
-            </Footnote>
+            )}
+            <div ref={messagesEndRef} />
           </div>
+
           <div className="suggestions">
             {[
               "Why is my bill higher?",
               "Explain my appliance estimates",
               "What do safety events mean?",
             ].map((q) => (
-              <button key={q} disabled={busy} onClick={() => ask(q)}>
+              <button key={q} disabled={busy} onClick={() => ask(q)} type="button">
                 {q}
                 <ArrowUpRight size={13} />
               </button>
             ))}
           </div>
+
           <form
             className="chat-input"
             onSubmit={(e) => {
@@ -1230,25 +1306,39 @@ function Ask({ data }) {
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               placeholder="What would you like to understand?"
+              disabled={busy}
               required
             />
             <button
               aria-label="Send question"
               disabled={busy || !question.trim()}
+              type="submit"
             >
               <ArrowRight size={20} />
             </button>
           </form>
-          <label className="live-option">
-            <input
-              type="checkbox"
-              checked={live}
-              onChange={(e) => setLive(e.target.checked)}
-            />
-            Try live Groq narration (falls back automatically)
-          </label>
-          {busy && <p role="status">Reading the fact sheet…</p>}
-          {error && <p role="alert">{error}</p>}
+
+          <div className="chat-footer">
+            <label className="live-option">
+              <input
+                type="checkbox"
+                checked={live}
+                onChange={(e) => setLive(e.target.checked)}
+              />
+              Try live Groq narration (falls back automatically)
+            </label>
+            {messages.length > 1 && (
+              <button
+                type="button"
+                className="chat-reset-btn"
+                onClick={resetChat}
+                disabled={busy}
+              >
+                Clear history
+              </button>
+            )}
+          </div>
+          {error && <p role="alert" className="chat-error-text">{error}</p>}
         </Card>
         <Card className="facts-card">
           <SectionTitle

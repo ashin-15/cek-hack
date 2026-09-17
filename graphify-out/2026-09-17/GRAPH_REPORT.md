@@ -1,21 +1,21 @@
 # Graph Report - cek-hack  (2026-09-17)
 
 ## Corpus Check
-- 57 files · ~54,123 words
+- 93 files · ~69,928 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 491 nodes · 611 edges · 33 communities (29 shown, 4 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.76)
+- 669 nodes · 915 edges · 54 communities (46 shown, 8 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 12 edges (avg confidence: 0.72)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e67b8aad`
+- Built from commit: `b3db762e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- research/README.md
+- 03 — Electrical Fault & Appliance-Condition Detectability
 - Energy Intelligence ML Training Pipeline — Technical Design and Implementation Plan
 - Acceptance criteria
 - 09 — Dataset-Verified Model Implementation Plan
@@ -29,57 +29,70 @@
 - Decision Record — Finalized MVP Workflow
 - load_smart_meter_15min
 - schemas.py
-- test_e2e_pipeline.py
+- run_pipeline
 - evaluate_event_detection
 - 02 — System Capabilities (Functional Scope)
-- create_smart_meter_splits
-- 05 — AI / ML Model Mapping per Capability
-- audit_datasets.py
-- Predictive_Analytics_for_Energy_Efficiency_Leverag.md
 - run.py
+- 05 — AI / ML Model Mapping per Capability
+- train.py
+- Predictive_Analytics_for_Energy_Efficiency_Leverag.md
+- billing.py
 - SDG 7 — Affordable and Clean Energy
 - test_models.py
 - Project Context for Agents
 - Energy Intelligence ML Training Pipeline — Delivery Loop
-- Household Energy Intelligence Dataset (`ai_energy_intelligence_dataset.csv`)
-- cek-hack
-- Data Audit and Verification Report
+- data/README.md
+- Dataset audit
 - promote.py
 - backend/__init__.py
 - backend/ml/__init__.py
+- package.json
+- main.jsx
+- test_advisor.py
+- 07 — Proposed System Scope & Novelty
+- Progress and AI handoff — Paranova
+- 04 — Data Collection Approaches (India / Kerala context)
+- 06 — Practical Feasibility Assessment
+- 12 — Local MVP implementation record
+- Research Index — AI-Based Household Energy Intelligence System
+- Paranova — household energy intelligence
+- 0001_initial.py
+- energy/__init__.py
+- dev.py
+- paranova-energy
 
 ## God Nodes (most connected - your core abstractions)
 1. `Energy Intelligence ML Training Pipeline — Technical Design and Implementation Plan` - 25 edges
 2. `Acceptance criteria` - 23 edges
-3. `load_smart_meter_15min()` - 19 edges
-4. `run_pipeline()` - 17 edges
-5. `FINAL WORKFLOW — AI Household Energy Intelligence (Hackathon MVP)` - 17 edges
-6. `Electricity Demand Forecasting In Kerala Using Machine Learning Models` - 16 edges
-7. `08 — Abnormal-Usage Model: Plan & Specification` - 16 edges
-8. `inventory_datasets()` - 13 edges
+3. `main()` - 18 edges
+4. `load_smart_meter_15min()` - 17 edges
+5. `run_pipeline()` - 17 edges
+6. `FINAL WORKFLOW — AI Household Energy Intelligence (Hackathon MVP)` - 17 edges
+7. `Electricity Demand Forecasting In Kerala Using Machine Learning Models` - 16 edges
+8. `08 — Abnormal-Usage Model: Plan & Specification` - 16 edges
 9. `02 — System Capabilities (Functional Scope)` - 13 edges
 10. `09 — Dataset-Verified Model Implementation Plan` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `test_daily_abnormal_adapter_and_audit()` --calls--> `load_daily_abnormal()`  [EXTRACTED]
-  tests/ml/test_adapters_and_quality.py → backend/ml/adapters/daily_abnormal.py
+- `FactsProvider` --uses--> `Snapshot`  [INFERRED]
+  energy/provider.py → backend/api/models.py
+- `ReplayProvider` --uses--> `Snapshot`  [INFERRED]
+  energy/provider.py → backend/api/models.py
+- `section()` --calls--> `forecast_from_artifact()`  [EXTRACTED]
+  backend/api/views.py → energy/inference.py
 - `test_labelled_home_adapter_isolation()` --calls--> `load_labelled_home_15min()`  [EXTRACTED]
   tests/ml/test_adapters_and_quality.py → backend/ml/adapters/labelled_home_15min.py
-- `main()` --calls--> `load_smart_meter_15min()`  [EXTRACTED]
-  scripts/audit_datasets.py → backend/ml/adapters/smart_meter_15min.py
 - `test_inference_engine_scoring()` --calls--> `load_smart_meter_15min()`  [EXTRACTED]
   tests/ml/test_e2e_pipeline.py → backend/ml/adapters/smart_meter_15min.py
-- `test_injection_benchmark()` --calls--> `load_smart_meter_15min()`  [EXTRACTED]
-  tests/ml/test_injection.py → backend/ml/adapters/smart_meter_15min.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (33 total, 4 thin omitted)
+## Communities (54 total, 8 thin omitted)
 
-### Community 0 - "research/README.md"
-Cohesion: 0.04
-Nodes (38): 03 — Electrical Fault & Appliance-Condition Detectability, 1. Loose electrical connections, 2. Earthing problems, 3. Leakage / abnormal current behaviour, 4. Voltage / current abnormalities, 5. Old / degrading appliances, 6. Inefficient appliances, Data tiers used in this file (+30 more)
+### Community 0 - "03 — Electrical Fault & Appliance-Condition Detectability"
+Cohesion: 0.18
+Nodes (10): 03 — Electrical Fault & Appliance-Condition Detectability, 1. Loose electrical connections, 2. Earthing problems, 3. Leakage / abnormal current behaviour, 4. Voltage / current abnormalities, 5. Old / degrading appliances, 6. Inefficient appliances, Data tiers used in this file (+2 more)
 
 ### Community 1 - "Energy Intelligence ML Training Pipeline — Technical Design and Implementation Plan"
 Cohesion: 0.05
@@ -114,8 +127,8 @@ Cohesion: 0.11
 Nodes (18): 01 — Paper Evidence Audit, Cross-paper summary, Paper [A] — Electricity Demand Forecasting in Kerala using ML (CONIT 2023), Paper [B] — AI-Enabled Smart Energy Optimization System (IJST 2026), Paper [C] — Predictive Analytics for Energy Efficiency (Energies 2024), Reusable for us, Reusable for us, Reusable for us (+10 more)
 
 ### Community 9 - "inventory_datasets"
-Cohesion: 0.20
-Nodes (15): SourceDescriptor, compute_file_hash_and_rows(), inventory_datasets(), match_schema_signature(), Dataset discovery, inventorying, hashing, and schema signature matching., Compute SHA-256 hash, size in bytes, row count, and header columns., Match a column list against the signatures defined in contracts., Inventory and fingerprint all supported datasets in data_dir. (+7 more)
+Cohesion: 0.19
+Nodes (14): compute_file_hash_and_rows(), inventory_datasets(), match_schema_signature(), Dataset discovery, inventorying, hashing, and schema signature matching., Compute SHA-256 hash, size in bytes, row count, and header columns., Match a column list against the signatures defined in contracts., Inventory and fingerprint all supported datasets in data_dir., Path (+6 more)
 
 ### Community 10 - "Electricity Demand Forecasting In Kerala Using Machine Learning Models"
 Cohesion: 0.11
@@ -126,44 +139,44 @@ Cohesion: 0.11
 Nodes (17): AI/ML boundary, Backend, Data and AI, Data and integration decisions, Decision Record — Finalized MVP Workflow, Feature evidence tiers, Frontend, Implementation recommendations (+9 more)
 
 ### Community 12 - "load_smart_meter_15min"
-Cohesion: 0.15
-Nodes (12): Adapter for Intelligent_abnormal_electricity_usage.csv., load_labelled_home_15min(), DataFrame, Adapter for ai_energy_intelligence_dataset.csv., Load ai_energy_intelligence_dataset.csv, emitting canonical telemetry and…, load_smart_meter_15min(), DataFrame, Adapter for synthetic_smart_meter_15min.csv. (+4 more)
+Cohesion: 0.13
+Nodes (16): load_daily_abnormal(), DataFrame, Adapter for Intelligent_abnormal_electricity_usage.csv., Load daily abnormal usage dataset, cleaning strings and quarantining missing-…, load_labelled_home_15min(), DataFrame, Adapter for ai_energy_intelligence_dataset.csv., Load ai_energy_intelligence_dataset.csv, emitting canonical telemetry and… (+8 more)
 
 ### Community 13 - "schemas.py"
-Cohesion: 0.24
-Nodes (12): AnomalyFacts, AuditFinding, AuditReport, Typed data contracts and schemas for the ML pipeline., RunManifest, audit_daily_abnormal(), audit_smart_meter_15min(), DataFrame (+4 more)
+Cohesion: 0.27
+Nodes (11): AnomalyFacts, AuditFinding, AuditReport, Typed data contracts and schemas for the ML pipeline., RunManifest, SourceDescriptor, audit_daily_abnormal(), audit_smart_meter_15min() (+3 more)
 
-### Community 14 - "test_e2e_pipeline.py"
-Cohesion: 0.16
-Nodes (10): EnergyIntelligenceInferenceEngine, DataFrame, Inference engine loading promoted model artifacts to score live/replayed…, Inference engine for real-time or batch interval scoring., Score a DataFrame of precomputed interval feature rows., End-to-end pipeline and inference engine tests., Verify that dry-run successfully inventories and validates datasets., Test full training run on project data and inference scoring. (+2 more)
+### Community 14 - "run_pipeline"
+Cohesion: 0.17
+Nodes (11): EnergyIntelligenceInferenceEngine, DataFrame, Inference engine loading promoted model artifacts to score live/replayed…, Inference engine for real-time or batch interval scoring., Score a DataFrame of precomputed interval feature rows., run_pipeline(), End-to-end pipeline and inference engine tests., Verify that dry-run successfully inventories and validates datasets. (+3 more)
 
 ### Community 15 - "evaluate_event_detection"
-Cohesion: 0.16
-Nodes (11): Any, inject_benchmark_events(), DataFrame, Controlled synthetic event injection for Phase 4 benchmarking., Inject reproducible synthetic events on a copy of the test frame., evaluate_event_detection(), DataFrame, Evaluation metrics for event detection and interval anomalies. (+3 more)
+Cohesion: 0.13
+Nodes (16): Any, inject_benchmark_events(), DataFrame, Controlled synthetic event injection for Phase 4 benchmarking., Inject reproducible synthetic events on a copy of the test frame., evaluate_event_detection(), DataFrame, Evaluation metrics for event detection and interval anomalies. (+8 more)
 
 ### Community 16 - "02 — System Capabilities (Functional Scope)"
 Cohesion: 0.15
 Nodes (13): 02 — System Capabilities (Functional Scope), 10. Appliance efficiency / ageing detection (T2/T3), 11. Electrical fault detection (T2/T3, mostly needs sensors), 12. Cross-cutting, 1. Energy consumption monitoring (T1), 2. Usage pattern analysis (T1), 3. Anomaly detection (T1), 4. Energy wastage detection (T1/T2) (+5 more)
 
-### Community 17 - "create_smart_meter_splits"
-Cohesion: 0.27
-Nodes (9): SplitManifest, create_daily_splits(), create_smart_meter_splits(), DataFrame, Deterministic, leakage-safe temporal and group split generators., Generate temporal splits (train: 1-21, val: 22-24, test: 25-28) for 15-minute…, Generate temporal split for daily abnormal dataset (train: 1-24, test: 25-30)., Tests for AC-007: Deterministic splits and partition isolation. (+1 more)
+### Community 17 - "run.py"
+Cohesion: 0.22
+Nodes (10): SplitManifest, create_daily_splits(), create_smart_meter_splits(), DataFrame, Deterministic, leakage-safe temporal and group split generators., Generate temporal splits (train: 1-21, val: 22-24, test: 25-28) for 15-minute…, Generate temporal split for daily abnormal dataset (train: 1-24, test: 25-30)., Offline ML training pipeline orchestrator. (+2 more)
 
 ### Community 18 - "05 — AI / ML Model Mapping per Capability"
 Cohesion: 0.18
 Nodes (10): 05 — AI / ML Model Mapping per Capability, 1. Consumption forecasting, 2. Anomaly detection, 3. Appliance identification / disaggregation, 4. Appliance efficiency estimation, 5. Fault detection (see file 03 for what is physically observable), 6. Energy optimisation, 7. Personalised recommendations (+2 more)
 
-### Community 19 - "audit_datasets.py"
-Cohesion: 0.33
-Nodes (6): format_audit_markdown(), format_summary_markdown(), Report generators for data audit, model cards, and benchmark summaries., Format run summary into markdown., Format multiple dataset audit reports into markdown., main()
+### Community 19 - "train.py"
+Cohesion: 0.13
+Nodes (32): digest(), write_json(), detect_events(), evaluate_appliances(), quality(), Coarse interval step events and independent labelled safety replay., safety_replay(), _bundle() (+24 more)
 
 ### Community 20 - "Predictive_Analytics_for_Energy_Efficiency_Leverag.md"
 Cohesion: 0.22
 Nodes (8): 1. Introduction, 2. Description of the Research Problem, 3. Description of Supervised Machine Learning Implementation, 4. Results of Simulation Studies, 5. Conclusions, Abbreviations, Predictive Analytics for Energy Efficiency: Leveraging Machine Learning to Optimize Household Energy Consumption, References
 
-### Community 21 - "run.py"
-Cohesion: 0.32
-Nodes (5): load_daily_abnormal(), DataFrame, Load daily abnormal usage dataset, cleaning strings and quarantining missing-…, Offline ML training pipeline orchestrator., run_pipeline()
+### Community 21 - "billing.py"
+Cohesion: 0.10
+Nodes (24): api_view, Snapshot, section(), band_for(), estimate(), money(), Monthly equivalent energy + fixed charges. No invented levies or ToD enrollment., schedule() (+16 more)
 
 ### Community 22 - "SDG 7 — Affordable and Clean Energy"
 Cohesion: 0.29
@@ -177,37 +190,73 @@ Nodes (4): Contribution rules, Evidence discipline, Project Context for Agents, 
 Cohesion: 0.40
 Nodes (4): Current Loop — LOOP-002, Energy Intelligence ML Training Pipeline — Delivery Loop, LOOP-001, Prior loops
 
-### Community 26 - "Household Energy Intelligence Dataset (`ai_energy_intelligence_dataset.csv`)"
-Cohesion: 0.50
-Nodes (3): Household Energy Intelligence Dataset (`ai_energy_intelligence_dataset.csv`), Overview, Schema & Field Descriptions
+### Community 26 - "data/README.md"
+Cohesion: 0.40
+Nodes (4): Dataset roles and storage, Household Energy Intelligence Dataset (`ai_energy_intelligence_dataset.csv`), Overview, Schema & Field Descriptions
 
-### Community 27 - "cek-hack"
-Cohesion: 0.50
-Nodes (3): cek-hack, Getting Started, License
+### Community 28 - "Dataset audit"
+Cohesion: 0.40
+Nodes (4): ai_energy_intelligence_dataset.csv, Dataset audit, Intelligent_abnormal_electricity_usage.csv, synthetic_smart_meter_15min.csv
 
-### Community 28 - "Data Audit and Verification Report"
-Cohesion: 0.50
-Nodes (3): Data Audit and Verification Report, Dataset: `daily_abnormal_v1` — PASSED, Dataset: `smart_meter_15min_v1` — PASSED
+### Community 33 - "package.json"
+Cohesion: 0.06
+Nodes (30): axios, dependencies, axios, lucide-react, react, react-dom, react-router-dom, recharts (+22 more)
+
+### Community 34 - "main.jsx"
+Cohesion: 0.17
+Nodes (12): api, Appliances(), Ask(), Chart(), Consumption(), Cost(), date(), Evidence() (+4 more)
+
+### Community 35 - "test_advisor.py"
+Cohesion: 0.31
+Nodes (9): fallback(), _narrate(), Facts-only narration. Llama selects grounded sentences; arbitrary claims fail…, statements(), validate_response(), facts(), fixture, test_safety_and_out_of_scope() (+1 more)
+
+### Community 36 - "07 — Proposed System Scope & Novelty"
+Cohesion: 0.18
+Nodes (11): 07 — Proposed System Scope & Novelty, Advanced differentiating features (Tier 2 — prototype on one home / bench), AI/ML components (from file 05), Core MVP (Tier 1), Decision log, Explicitly out of scope (state on a roadmap slide), Hardware requirements, Main technical risks & mitigations (+3 more)
+
+### Community 37 - "Progress and AI handoff — Paranova"
+Cohesion: 0.18
+Nodes (11): API contract reminder, Completed implementation, Critical workspace / Git state, Dataset state and roles, How the next AI should proceed, Known limitations / unfinished external verification, Last completed model run, Progress and AI handoff — Paranova (+3 more)
+
+### Community 38 - "04 — Data Collection Approaches (India / Kerala context)"
+Cohesion: 0.29
+Nodes (6): 04 — Data Collection Approaches (India / Kerala context), Comparison table, Finalized hackathon data plan (see file 08), Indian-context practicalities [I], Realistic prototype data architecture, What each tier enables (recap from files 02–03)
+
+### Community 39 - "06 — Practical Feasibility Assessment"
+Cohesion: 0.29
+Nodes (6): 06 — Practical Feasibility Assessment, Cross-cutting limitations, Feasibility verdict, Tier 1 — MVP / hackathon-feasible (software + project dataset replay), Tier 2 — Medium-term (needs IoT hardware fleet / additional datasets / months of data), Tier 3 — Research-level / advanced
+
+### Community 40 - "12 — Local MVP implementation record"
+Cohesion: 0.29
+Nodes (7): 12 — Local MVP implementation record, Appliance and safety limits, Continuation checkpoint, Data and audit, Forecast and anomaly decisions, Local operation and verification, Tariff and narration sources
+
+### Community 41 - "Research Index — AI-Based Household Energy Intelligence System"
+Cohesion: 0.40
+Nodes (5): Evidence-tag convention (used in every file), Implementation specification, Key takeaways (one paragraph), Research Index — AI-Based Household Energy Intelligence System, Source papers (in `../`)
+
+### Community 42 - "Paranova — household energy intelligence"
+Cohesion: 0.40
+Nodes (5): Paranova — household energy intelligence, Repository map, Reproduce and verify, Run locally, What is included
 
 ## Knowledge Gaps
-- **271 isolated node(s):** `Contribution rules`, `Where things live`, `Evidence discipline`, `Getting Started`, `License` (+266 more)
+- **312 isolated node(s):** `Migration`, `name`, `version`, `private`, `type` (+307 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
+- **Why does `write_json()` connect `train.py` to `inventory_datasets`?**
+  _High betweenness centrality (0.032) - this node is a cross-community bridge._
 - **Why does `FINAL WORKFLOW — AI Household Energy Intelligence (Hackathon MVP)` connect `FINAL WORKFLOW — AI Household Energy Intelligence (Hackathon MVP)` to `research/README.md`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
-- **Why does `08 — Abnormal-Usage Model: Plan & Specification` connect `08 — Abnormal-Usage Model: Plan & Specification` to `research/README.md`?**
-  _High betweenness centrality (0.039) - this node is a cross-community bridge._
-- **What connects `Contribution rules`, `Where things live`, `Evidence discipline` to the rest of the system?**
-  _271 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `research/README.md` be split into smaller, more focused modules?**
-  _Cohesion score 0.043478260869565216 - nodes in this community are weakly interconnected._
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+- **What connects `Migration`, `name`, `version` to the rest of the system?**
+  _312 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Energy Intelligence ML Training Pipeline — Technical Design and Implementation Plan` be split into smaller, more focused modules?**
   _Cohesion score 0.045454545454545456 - nodes in this community are weakly interconnected._
 - **Should `Acceptance criteria` be split into smaller, more focused modules?**
   _Cohesion score 0.058823529411764705 - nodes in this community are weakly interconnected._
 - **Should `09 — Dataset-Verified Model Implementation Plan` be split into smaller, more focused modules?**
+  _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
+- **Should `FINAL WORKFLOW — AI Household Energy Intelligence (Hackathon MVP)` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
