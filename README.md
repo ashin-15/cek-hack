@@ -35,10 +35,12 @@ npm run dev --prefix frontend
 
 The app needs no network after setup. Groq narration is optional: copy
 `.env.example` to `.env`, add a server-side key, restart Django, then select
-“Try live Groq narration” in Ask. The official catalogue currently lists
-`llama-3.3-70b-versatile` with enterprise access. Missing access, outages and
-invalid responses all fall back to deterministic explanations. No secrets reach
-Vite or the browser. Live Groq was not exercised with a paid/authorized account.
+“Try live Groq narration” in Ask. It calls `openai/gpt-oss-120b`, a model
+generally available on Groq's catalogue (the `llama-3.3-70b-versatile` model
+this was originally built against requires enterprise account access). Missing
+access, outages and invalid responses all fall back to deterministic
+explanations. No secrets reach Vite or the browser. Live Groq was exercised
+with an authorized account.
 
 ## Reproduce and verify
 

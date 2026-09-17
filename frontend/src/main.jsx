@@ -70,7 +70,7 @@ const tabs = [
   ["power-quality", "Power quality", Activity],
   ["safety", "Safety", ShieldCheck],
   ["cost", "Cost & savings", Wallet],
-  ["ask", "Ask Paranova", MessageCircle],
+  ["ask", "Ask", MessageCircle],
 ];
 function Icon({ icon: Component, ...props }) {
   return <Component size={19} strokeWidth={1.7} {...props} />;
@@ -269,9 +269,6 @@ function App() {
           <div className="brand-mark">
             <Bolt size={24} fill="currentColor" />
           </div>
-          <span>
-            paranova<span className="brand-dot">.</span>
-          </span>
         </a>
         <div className="workspace-label">YOUR HOME, UNDERSTOOD</div>
         <nav>
@@ -368,7 +365,7 @@ function App() {
                 />
               </Routes>
               <footer>
-                <span>PARANOVA / HOUSEHOLD ENERGY INTELLIGENCE</span>
+                <span>HOUSEHOLD ENERGY INTELLIGENCE</span>
                 <span>Simulated replay · Advisory only · All times IST</span>
               </footer>
             </>
@@ -1187,7 +1184,7 @@ function Ask({ data }) {
               <Sparkles size={22} />
             </div>
             <div>
-              <strong>Paranova</strong>
+              <strong>Advisor</strong>
               <span>Your household energy companion</span>
             </div>
           </div>
