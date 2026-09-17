@@ -1221,7 +1221,7 @@ function Ask({ data }) {
             </div>
             <div className="advisor-status-badge">
               <span className={`status-pulse ${live ? "active" : ""}`} />
-              {live ? "Live Groq AI" : "Template Mode"}
+              {live ? "Live AI Advisor" : "Template Mode"}
             </div>
           </div>
 
@@ -1253,7 +1253,7 @@ function Ask({ data }) {
                     )}
                     <Footnote>
                       <span className="source-tag">
-                        {m.answer.source === "Groq facts narration" ? "⚡ " : "📋 "}
+                        {m.answer.source && m.answer.source.includes("narration") ? "⚡ " : "📋 "}
                         {m.answer.source}
                         {m.answer.model ? ` · ${m.answer.model}` : ""}
                       </span>
@@ -1270,7 +1270,7 @@ function Ask({ data }) {
                 <span className="dot" />
                 <span className="dot" />
                 <span className="typing-text">
-                  {live ? "Consulting Groq facts narration…" : "Reading fact sheet…"}
+                  {live ? "Consulting AI facts narration…" : "Reading fact sheet…"}
                 </span>
               </div>
             )}
@@ -1325,7 +1325,7 @@ function Ask({ data }) {
                 checked={live}
                 onChange={(e) => setLive(e.target.checked)}
               />
-              Try live Groq narration (falls back automatically)
+              Try live LLM narration (NVIDIA / Groq, falls back automatically)
             </label>
             {messages.length > 1 && (
               <button

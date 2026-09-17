@@ -365,8 +365,8 @@
     "semantic_hash": ""
   },
   "energy/advisor.py": {
-    "mtime": 1789638619.2117696,
-    "ast_hash": "e433b23997fbc86d4c860d37ebb3f51f",
+    "mtime": 1789639218.8825934,
+    "ast_hash": "b179e2184c81490d138de7ba2119d7a3",
     "semantic_hash": ""
   },
   "energy/billing.py": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "frontend/src/main.jsx": {
-    "mtime": 1789638659.143936,
-    "ast_hash": "f035369a49f1b3b36434563c3f9cd330",
+    "mtime": 1789639266.012976,
+    "ast_hash": "b121a37d6f64c9601767ffec11bfc7be",
     "semantic_hash": ""
   },
   "frontend/tests/dashboard.spec.js": {

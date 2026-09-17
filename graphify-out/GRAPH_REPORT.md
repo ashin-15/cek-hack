@@ -1,16 +1,16 @@
 # Graph Report - cek-hack  (2026-09-17)
 
 ## Corpus Check
-- 93 files · ~70,265 words
+- 93 files · ~70,446 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 669 nodes · 915 edges · 54 communities (46 shown, 8 thin omitted)
+- 670 nodes · 917 edges · 54 communities (46 shown, 8 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 12 edges (avg confidence: 0.72)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7b4abcf4`
+- Built from commit: `38a69d54`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -163,7 +163,7 @@ Cohesion: 0.22
 Nodes (10): SplitManifest, create_daily_splits(), create_smart_meter_splits(), DataFrame, Deterministic, leakage-safe temporal and group split generators., Generate temporal splits (train: 1-21, val: 22-24, test: 25-28) for 15-minute…, Generate temporal split for daily abnormal dataset (train: 1-24, test: 25-30)., Offline ML training pipeline orchestrator. (+2 more)
 
 ### Community 18 - "05 — AI / ML Model Mapping per Capability"
-Cohesion: 0.18
+Cohesion: 0.20
 Nodes (10): 05 — AI / ML Model Mapping per Capability, 1. Consumption forecasting, 2. Anomaly detection, 3. Appliance identification / disaggregation, 4. Appliance efficiency estimation, 5. Fault detection (see file 03 for what is physically observable), 6. Energy optimisation, 7. Personalised recommendations (+2 more)
 
 ### Community 19 - "train.py"
@@ -207,8 +207,8 @@ Cohesion: 0.17
 Nodes (12): api, Appliances(), Ask(), Chart(), Consumption(), Cost(), date(), Evidence() (+4 more)
 
 ### Community 35 - "test_advisor.py"
-Cohesion: 0.31
-Nodes (9): fallback(), _narrate(), Facts-only narration. Llama selects grounded sentences; arbitrary claims fail…, statements(), validate_response(), facts(), fixture, test_safety_and_out_of_scope() (+1 more)
+Cohesion: 0.29
+Nodes (10): fallback(), map_to_approved(), _narrate(), Facts-only narration. Llama selects grounded sentences; arbitrary claims fail…, statements(), validate_response(), facts(), fixture (+2 more)
 
 ### Community 36 - "07 — Proposed System Scope & Novelty"
 Cohesion: 0.18
@@ -223,7 +223,7 @@ Cohesion: 0.29
 Nodes (6): 04 — Data Collection Approaches (India / Kerala context), Comparison table, Finalized hackathon data plan (see file 08), Indian-context practicalities [I], Realistic prototype data architecture, What each tier enables (recap from files 02–03)
 
 ### Community 39 - "06 — Practical Feasibility Assessment"
-Cohesion: 0.33
+Cohesion: 0.29
 Nodes (6): 06 — Practical Feasibility Assessment, Cross-cutting limitations, Feasibility verdict, Tier 1 — MVP / hackathon-feasible (software + project dataset replay), Tier 2 — Medium-term (needs IoT hardware fleet / additional datasets / months of data), Tier 3 — Research-level / advanced
 
 ### Community 40 - "12 — Local MVP implementation record"

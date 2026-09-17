@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1789637384.2965586,
-    "ast_hash": "2fd8681a225478eb49e9faf6c722ba5b",
+    "mtime": 1789637928.436625,
+    "ast_hash": "3c86570011dc8283a7b1f4f086694099",
     "semantic_hash": ""
   },
   "configs/ml/data_contracts.yaml": {
@@ -365,8 +365,8 @@
     "semantic_hash": ""
   },
   "energy/advisor.py": {
-    "mtime": 1789637384.3269072,
-    "ast_hash": "b9c8bf04c4a17d10aa595512d438d9a5",
+    "mtime": 1789638619.2117696,
+    "ast_hash": "e433b23997fbc86d4c860d37ebb3f51f",
     "semantic_hash": ""
   },
   "energy/billing.py": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "frontend/src/main.jsx": {
-    "mtime": 1789637384.3277588,
-    "ast_hash": "9c61c2533ce52974b90a44da4b886884",
+    "mtime": 1789638659.143936,
+    "ast_hash": "f035369a49f1b3b36434563c3f9cd330",
     "semantic_hash": ""
   },
   "frontend/tests/dashboard.spec.js": {
@@ -485,8 +485,8 @@
     "semantic_hash": ""
   },
   "frontend/index.html": {
-    "mtime": 1789637384.3269944,
-    "ast_hash": "b19fb2488711fb5d5cd1d612ed1b0688",
+    "mtime": 1789637928.4370432,
+    "ast_hash": "551bbdef9b0e266ece416939a81d5582",
     "semantic_hash": ""
   },
   "progess.md": {

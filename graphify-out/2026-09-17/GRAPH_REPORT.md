@@ -1,7 +1,7 @@
 # Graph Report - cek-hack  (2026-09-17)
 
 ## Corpus Check
-- 93 files · ~69,928 words
+- 93 files · ~70,265 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b3db762e`
+- Built from commit: `7b4abcf4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -223,7 +223,7 @@ Cohesion: 0.29
 Nodes (6): 04 — Data Collection Approaches (India / Kerala context), Comparison table, Finalized hackathon data plan (see file 08), Indian-context practicalities [I], Realistic prototype data architecture, What each tier enables (recap from files 02–03)
 
 ### Community 39 - "06 — Practical Feasibility Assessment"
-Cohesion: 0.29
+Cohesion: 0.33
 Nodes (6): 06 — Practical Feasibility Assessment, Cross-cutting limitations, Feasibility verdict, Tier 1 — MVP / hackathon-feasible (software + project dataset replay), Tier 2 — Medium-term (needs IoT hardware fleet / additional datasets / months of data), Tier 3 — Research-level / advanced
 
 ### Community 40 - "12 — Local MVP implementation record"

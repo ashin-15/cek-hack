@@ -1325,10 +1325,22 @@
       "norm_label": "fallback()"
     },
     {
-      "label": "validate_response()",
+      "label": "map_to_approved()",
       "file_type": "code",
       "source_file": "energy/advisor.py",
       "source_location": "L56",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "energy_advisor_map_to_approved",
+      "community": 35,
+      "community_name": "test_advisor.py",
+      "norm_label": "map_to_approved()"
+    },
+    {
+      "label": "validate_response()",
+      "file_type": "code",
+      "source_file": "energy/advisor.py",
+      "source_location": "L70",
       "_callable": true,
       "_origin": "ast",
       "id": "energy_advisor_validate_response",
@@ -1340,7 +1352,7 @@
       "label": "_narrate()",
       "file_type": "code",
       "source_file": "energy/advisor.py",
-      "source_location": "L93",
+      "source_location": "L107",
       "_callable": true,
       "_origin": "ast",
       "id": "energy_advisor_narrate",
@@ -4497,8 +4509,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_research_05_ai_ml_model_mapping",
-      "community": 18,
-      "community_name": "05 \u2014 AI / ML Model Mapping per Capability",
+      "community": 27,
+      "community_name": "research/README.md",
       "norm_label": "05_ai_ml_model_mapping.md"
     },
     {
@@ -4618,8 +4630,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "docs_research_06_feasibility_assessment",
-      "community": 27,
-      "community_name": "research/README.md",
+      "community": 39,
+      "community_name": "06 \u2014 Practical Feasibility Assessment",
       "norm_label": "06_feasibility_assessment.md"
     },
     {
@@ -10497,7 +10509,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "energy/advisor.py",
-      "source_location": "L158",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "energy_advisor",
+      "target": "energy_advisor_map_to_approved",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "energy/advisor.py",
+      "source_location": "L223",
       "weight": 1.0,
       "_origin": "ast",
       "source": "energy_advisor",
@@ -10519,7 +10542,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "energy/advisor.py",
-      "source_location": "L56",
+      "source_location": "L70",
       "weight": 1.0,
       "_origin": "ast",
       "source": "energy_advisor",
@@ -10578,7 +10601,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "energy/advisor.py",
-      "source_location": "L98",
+      "source_location": "L125",
       "weight": 1.0,
       "_origin": "ast",
       "source": "energy_advisor_narrate",
@@ -10590,7 +10613,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "energy/advisor.py",
-      "source_location": "L57",
+      "source_location": "L71",
       "weight": 1.0,
       "_origin": "ast",
       "source": "energy_advisor_validate_response",
@@ -10626,7 +10649,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "energy/advisor.py",
-      "source_location": "L97",
+      "source_location": "L123",
       "weight": 1.0,
       "_origin": "ast",
       "source": "energy_advisor_narrate",
@@ -10686,7 +10709,19 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "energy/advisor.py",
-      "source_location": "L146",
+      "source_location": "L192",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "energy_advisor_narrate",
+      "target": "energy_advisor_map_to_approved",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "energy/advisor.py",
+      "source_location": "L214",
       "weight": 1.0,
       "_origin": "ast",
       "source": "energy_advisor_narrate",
@@ -17909,5 +17944,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "7b4abcf4d9a442d4367d06935c268fe00b6b3dd2"
+  "built_at_commit": "38a69d54668be77a3f794f6ee9008ccfbaf2fef9"
 }
