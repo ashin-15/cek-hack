@@ -15,11 +15,19 @@ file 11 controls the MVP scope.
 | 05 | [05_ai_ml_model_mapping.md](05_ai_ml_model_mapping.md) | Where AI/ML belongs; model classes per capability; paper-supported vs. proposed |
 | 06 | [06_feasibility_assessment.md](06_feasibility_assessment.md) | MVP vs medium-term vs research-level; hardware, datasets, infra, ML complexity, limitations |
 | 07 | [07_proposed_scope_and_novelty.md](07_proposed_scope_and_novelty.md) | Defensible project scope, differentiating/novel features, risks |
-| 10 | [10_finalized_workflow_decisions.md](10_finalized_workflow_decisions.md) | Historical decision record; superseded by file 11 |
-| **11 — authoritative** | [11_final-workflow-combined.md](11_final-workflow-combined.md) | Locked local-only MVP scope, dataset roles, pipeline, safety replay and demo workflow |
+| **10** | [10_workflow_decisions.md](10_workflow_decisions.md) | Accepted MVP product, data, safety, AI, stack and demo-workflow decisions; overrides earlier recommendations where different |
+| **11 — authoritative** | [11_final-workflow-combined.md](11_final-workflow-combined.md) | Master finalized combined workflow for the hackathon MVP |
 | 08 | [08_abnormal_usage_model_spec.md](08_abnormal_usage_model_spec.md) | Dataset-grounded daily abnormal-usage model specification and leakage controls |
 | 09 | [09_model_implementation_plan.md](09_model_implementation_plan.md) | Verified-dataset implementation plan for the interval anomaly model and daily benchmark |
 | 12 | [12_mvp_implementation.md](12_mvp_implementation.md) | Implemented pipeline, evaluation policy, limitations and verification |
+
+## Implementation specification
+
+The draft product requirements, technical design, and measurable acceptance contract
+for implementing the offline ML training pipeline are in
+[`../spec-driven/ml-training-pipeline/`](../spec-driven/ml-training-pipeline/). These
+documents translate the research decisions into stable `FR-*` and `AC-*` contracts;
+they do not authorize production implementation until explicitly approved.
 
 ## Source papers (in `../`)
 

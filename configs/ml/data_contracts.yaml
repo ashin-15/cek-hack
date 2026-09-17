@@ -1,0 +1,121 @@
+version: "1.0"
+
+sources:
+  smart_meter_15min_v1:
+    source_id: "smart_meter_15min_v1"
+    role: "primary_interval_replay"
+    provenance_class: "synthetic"
+    cadence_minutes: 15
+    primary_key: ["meter_id", "timestamp"]
+    required_columns:
+      - "timestamp"
+      - "consumer_number"
+      - "meter_id"
+      - "tariff_category"
+      - "supply_phase"
+      - "frequency_hz"
+      - "region_code"
+      - "dwelling_type"
+      - "num_occupants"
+      - "house_area_sqft"
+      - "connected_load_kw"
+      - "temperature_c"
+      - "humidity_pct"
+      - "voltage_v"
+      - "current_a"
+      - "power_factor"
+      - "real_power_kw"
+      - "consumption_interval_kwh"
+      - "cumulative_energy_kwh"
+    tolerances:
+      energy_power_kwh: 0.005
+      power_vi_cosphi_kw: 0.010
+      voltage_min_v: 180.0
+      voltage_max_v: 280.0
+      power_factor_min: 0.0
+      power_factor_max: 1.0
+
+  labelled_home_15min_v1:
+    source_id: "labelled_home_15min_v1"
+    role: "ground_truth_eval_and_safety_replay"
+    provenance_class: "synthetic"
+    cadence_minutes: 15
+    primary_key: ["timestamp"]
+    required_columns:
+      - "timestamp"
+      - "temperature_c"
+      - "occupancy_flag"
+      - "is_weekend"
+      - "is_grid_stress_window"
+      - "voltage_v"
+      - "current_a"
+      - "active_power_kw"
+      - "reactive_power_kvar"
+      - "power_factor"
+      - "kwh_interval"
+      - "monthly_cum_kwh"
+      - "energy_charge_running_inr"
+      - "fixed_charge_for_month_inr"
+      - "duty_running_inr"
+      - "gt_hvac_kw"
+      - "gt_hvac_aging_factor"
+      - "gt_lighting_kw"
+      - "gt_fridge_kw"
+      - "gt_water_heater_kw"
+      - "gt_plug_loads_kw"
+      - "anomaly_flag"
+      - "waste_event_flag"
+      - "anomaly_type"
+      - "addon_thd_percent"
+      - "addon_current_leakage_ma"
+      - "addon_neutral_ground_v"
+      - "addon_voltage_fault_v_delta"
+      - "addon_fault_flag"
+      - "addon_fault_type"
+    forbidden_features:
+      - "anomaly_flag"
+      - "waste_event_flag"
+      - "anomaly_type"
+      - "gt_hvac_kw"
+      - "gt_hvac_aging_factor"
+      - "gt_lighting_kw"
+      - "gt_fridge_kw"
+      - "gt_water_heater_kw"
+      - "gt_plug_loads_kw"
+      - "addon_thd_percent"
+      - "addon_current_leakage_ma"
+      - "addon_neutral_ground_v"
+      - "addon_voltage_fault_v_delta"
+      - "addon_fault_flag"
+      - "addon_fault_type"
+      - "monthly_cum_kwh"
+      - "energy_charge_running_inr"
+      - "fixed_charge_for_month_inr"
+      - "duty_running_inr"
+
+  daily_abnormal_v1:
+    source_id: "daily_abnormal_v1"
+    role: "daily_benchmark_isolated"
+    provenance_class: "community-undocumented"
+    cadence_days: 1
+    primary_key: ["Meter_Id", "Date"]
+    required_columns:
+      - "Meter_Id"
+      - "Date"
+      - "Region_Code"
+      - "Dwelling_Type"
+      - "Num_Occupants"
+      - "House_Area (sqft)"
+      - "Appliance_Score"
+      - "Connected_Load(kw)"
+      - "Temperature_C"
+      - "Humidity (%)"
+      - "Expected_Energy(kwh)"
+      - "Actual_Energy(kwh)"
+      - "Usage_Deviation(%)"
+      - "Cluster_Avg_Energy(kwh)"
+      - "Abnormal_Usage"
+    quarantined_columns:
+      - "Expected_Energy(kwh)"
+      - "Usage_Deviation(%)"
+      - "Cluster_Avg_Energy(kwh)"

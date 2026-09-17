@@ -1,0 +1,63 @@
+version: "1.0"
+seed: 42
+
+splits:
+  smart_meter_15min:
+    train_end_day: 21
+    val_end_day: 24
+    test_end_day: 28
+    secondary_test_meters: ["SM-KL-010", "SM-KL-011", "SM-KL-012"]
+  labelled_home_15min:
+    train_end_day: 42
+    val_end_day: 50
+    test_end_day: 60
+  daily_abnormal:
+    train_end_day: 24
+    test_end_day: 30
+    group_test_ratio: 0.20
+
+forecast:
+  candidates: ["seasonal_naive", "random_forest", "xgboost"]
+  selection:
+    min_improvement_pct: 5.0
+    max_regressed_meter_pct: 25.0
+    max_meter_regression_pct: 10.0
+    tie_margin_pct: 1.0
+  seasonal_naive:
+    lag_intervals: 672  # 7 days * 96 intervals
+  random_forest:
+    n_estimators: 100
+    max_depth: 12
+    min_samples_leaf: 4
+    random_state: 42
+    n_jobs: -1
+  xgboost:
+    n_estimators: 200
+    learning_rate: 0.05
+    max_depth: 6
+    subsample: 0.8
+    colsample_bytree: 0.8
+    random_state: 42
+    n_jobs: -1
+
+anomaly:
+  isolation_forest:
+    n_estimators: 200
+    contamination: 0.01
+    random_state: 42
+    n_jobs: -1
+  fusion:
+    weight_residual: 0.60
+    weight_iforest: 0.25
+    weight_rules: 0.15
+  hysteresis:
+    threshold_high: 0.70
+    threshold_low: 0.40
+    consecutive_open: 2
+    consecutive_close: 2
+
+electrical_rules:
+  voltage_lower_v: 216.0
+  voltage_upper_v: 244.0
+  power_factor_min: 0.85
+  overload_margin: 1.05

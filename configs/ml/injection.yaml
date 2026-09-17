@@ -1,0 +1,40 @@
+version: "1.0"
+seed: 42
+
+scenarios:
+  spike:
+    type: "spike"
+    multiplier_min: 2.0
+    multiplier_max: 4.0
+    duration_intervals: [1, 4]
+    count_per_meter: 3
+    guardrail: "within_connected_load"
+
+  plateau:
+    type: "left_on_plateau"
+    additional_kw_min: 0.3
+    additional_kw_max: 0.8
+    duration_intervals: [8, 24]
+    count_per_meter: 2
+    guardrail: "off_peak_hours"
+
+  baseload_step:
+    type: "baseload_step"
+    additional_kw_min: 0.15
+    additional_kw_max: 0.30
+    duration_days: [3, 5]
+    count_per_meter: 1
+    guardrail: "persistent_shift"
+
+  voltage_excursion:
+    type: "voltage_excursion"
+    voltage_shift_v: -25.0  # sag below 216 V (e.g. ~205 V)
+    duration_intervals: [2, 6]
+    count_per_meter: 2
+
+  post_outage_recovery:
+    type: "post_outage_recovery"
+    outage_intervals: 4      # 1 hour outage (zero current/kwh)
+    recharge_bump_kw: 0.5    # inverter/fridge pull after restoration
+    recharge_intervals: 2
+    count_per_meter: 1

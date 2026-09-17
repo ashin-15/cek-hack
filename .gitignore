@@ -36,6 +36,7 @@ ENV/
 *.onnx
 *.h5
 models/
+artifacts/
 
 # IDE / Editor
 .vscode/
