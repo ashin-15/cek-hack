@@ -32,7 +32,6 @@ ENV/
 *.parquet
 *.h5
 *.hdf5
-data/
 
 # Model artifacts
 *.pkl

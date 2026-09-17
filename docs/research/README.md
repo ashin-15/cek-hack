@@ -13,6 +13,7 @@ question and builds on the previous ones. Read them in order.
 | 05 | [05_ai_ml_model_mapping.md](05_ai_ml_model_mapping.md) | Where AI/ML belongs; model classes per capability; paper-supported vs. proposed |
 | 06 | [06_feasibility_assessment.md](06_feasibility_assessment.md) | MVP vs medium-term vs research-level; hardware, datasets, infra, ML complexity, limitations |
 | 07 | [07_proposed_scope_and_novelty.md](07_proposed_scope_and_novelty.md) | Defensible project scope, differentiating/novel features, risks |
+| 08 | [08_abnormal_usage_model_spec.md](08_abnormal_usage_model_spec.md) | Dataset-grounded daily abnormal-usage model specification and leakage controls |
 
 ## Source papers (in `../`)
 
